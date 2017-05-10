@@ -12,7 +12,7 @@ int fill_lattice(int *lattice, int n, float p) {
 
         }
         else {
-            lattice[i] = 0;
+            lattice[i] = -1;
         }
     }
 
