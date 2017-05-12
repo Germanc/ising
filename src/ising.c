@@ -2,6 +2,7 @@
 #include "time.h"
 #include <unistd.h>
 #include <stdio.h>
+#include "auxiliares.h"
 
 #include "metropolis.h"
 #include "lattice.h"
@@ -24,7 +25,7 @@ int main(int argc, char **argv) {
 			niter = atoi(optarg);
 			break;
 		  case 'T':
-			T = atoi(optarg);
+			T = atof(optarg);
 			break;
 		  case 'p':
 			prob = atoi(optarg);
@@ -51,6 +52,8 @@ int main(int argc, char **argv) {
 	for (int i = 0; i < niter; i++) {
 		metropolis(lattice, n, T, B);
 	}
+    float energ = energia(lattice, n, T, B);
+    printf("Energia: %f\n", energ);
 	print_lattice(lattice, n);
 	return 0;
 }
