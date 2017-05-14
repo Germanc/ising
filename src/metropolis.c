@@ -6,8 +6,9 @@
 int metropolis(int *lattice, int n, float T, float B) {
     int sitio;
     sitio = pick_site(lattice, n);
-    flip(lattice, n, T, sitio, B);
-  return 0;
+    int delta_e;
+    delta_e = flip(lattice, n, T, sitio, B);
+  return delta_e;
 }
 
 int pick_site(int *lattice, int n) {
@@ -32,12 +33,12 @@ int flip(int *lattice, int n, float T, int sitio, float B) {
     int delta_e = -J*(energia_final - energia_inicial) - B*(lattice[sitio]*(-1)-lattice[sitio]);;
 //    printf("Energia final: %i, Energia inicial: %i\n", energia_final, energia_inicial);
 
-    float pi = exp(-J*delta_e);
+    float pi = exp(-(1.0/T)*delta_e);
     if (pi>1) { 
-        return 0;
+        return delta_e;
     }else{
         if (aleatorio > pi) lattice[sitio] *= -1;
     }
-  return 0;
+  return delta_e;
 
 }
