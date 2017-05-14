@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 	float prob = 0.5;
 	int npre = n*n*500;
 
-    while ((c = getopt (argc, argv, "n:T:i:B:p:h")) != -1)
+    while ((c = getopt (argc, argv, "n:T:i:B:p:r:h")) != -1)
 		switch (c)
 		  {
 			case 'n':
