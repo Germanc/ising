@@ -35,10 +35,10 @@ int flip(int *lattice, int n, float T, int sitio, float B) {
 
     float pi = exp(-(1.0/T)*delta_e);
     if (pi>1) { 
-        return delta_e;
+        return 0;
     }else{
         if (aleatorio > pi) lattice[sitio] *= -1;
     }
-  return delta_e;
+  return 0;
 
 }
