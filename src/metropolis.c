@@ -17,7 +17,7 @@ int pick_site(int *lattice, int n) {
 
 int flip(int *lattice, int n, float T, int sitio, float B) {
     int S, E, O, N;
-    float J = 1.0/T;
+    float J = 1.0;;
     E = (sitio%(n-1) == 0) ? sitio-n+1 : sitio+1;
     if(E<0) E = 1;
     S = (sitio>=n*(n-1)-1) ? sitio-(n*(n-1)) : sitio+n;

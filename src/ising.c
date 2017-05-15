@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
 	int niter = 2000;
     float B = 0;
 	float prob = 0.5;
-	int npre = n*n*500;
+	int npre = n*n*5000;
 
     while ((c = getopt (argc, argv, "n:T:i:B:p:r:h")) != -1)
 		switch (c)
