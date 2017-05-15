@@ -20,7 +20,7 @@ int flip(int *lattice, int n, float T, int sitio, float B) {
     float J = 1.0;;
     E = (sitio%(n-1) == 0) ? sitio-n+1 : sitio+1;
     if(E<0) E = 1;
-    S = (sitio>=n*(n-1)-1) ? sitio-(n*(n-1)) : sitio+n;
+    S = (sitio>=n*(n-1)-1) ? sitio-(n*(n-1))+1 : sitio+n;
     O = (sitio%(n)== 0) ? sitio+n-1 : sitio-1;
     N = (sitio<(n-1)) ? sitio+(n*(n-1)) : sitio-n;
 //    printf("E: %i, S: %i, O: %i, N: %i, sitio: %i\n", E, S, O, N, sitio); 
