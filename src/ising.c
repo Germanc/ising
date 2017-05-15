@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
                 "-p probabilidad de ocupacion inicial\n"
 				"-i numero de iteraciones\n"
 				"-r numero de pasos de pretermalizacion\n"
-				"El formato de saluda es \'energia varenergia magnet varmagnet\'\n");
+				"El formato de saluda es \'T B energia varenergia magnet varmagnet\'\n");
               return 0;
 		  default:
 			break;
@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
 	}
 	float magnet_varianza = magnetsq - magnet*magnet;
 	float energia_varianza = energsq - energ*energ;
-    printf("%.15f %.15f %.15f %.15f\n", energ, energia_varianza, magnet, magnet_varianza);
+    printf("%f %f %.15f %.15f %.15f %.15f\n", T, B, energ, energia_varianza, magnet, magnet_varianza);
 //	print_lattice(lattice, n);
 	return 0;
 }
