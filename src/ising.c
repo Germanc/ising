@@ -82,19 +82,19 @@ int main(int argc, char **argv) {
 		energ = energ + energia_ahora/niter;
 		energsq = energsq + energia_ahora*energia_ahora/niter;
 		energi[i] = energia_ahora/niter;
-		magneti[i] = magnetizacion_ahora/niter;
+		magneti[i] = magnetizacion_ahora;
 	}
 	float sumam , sumae , sumamd=0, sumaed=0;
 	for (int i=0; i<niter;i++){
-		sumamd = sumamd + (magneti[i]-magnet)*(magneti[i]-magnet);
-		sumaed = sumaed + (energi[i]-energ)*(energi[i]-energ);
+		sumamd += (magneti[i]-magnet)*(magneti[i]-magnet)/niter;
+		sumaed += (energi[i]-energ)*(energi[i]-energ)/niter;
 	}
 	for (int k = 0; k<niter; k++){
 		sumam = 0;
 		sumae = 0;
 		for ( int i = 0; i<niter-k; i++){
-			sumam = sumam + (magneti[i]-magnet)*(magneti[i+k]-magnet);
-			sumae = sumae + (energi[i]-energ)*(energi[i+k]-energ);
+			sumam += (magneti[i]-magnet)*(magneti[i+k]-magnet)/niter;
+			sumae += (energi[i]-energ)*(energi[i+k]-energ)/niter;
 		}
 		rmagnet[k] = sumam/sumamd;
 		renerg[k] = sumae/sumaed;	
