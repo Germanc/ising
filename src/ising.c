@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
 	rmagnet = (float *)malloc(sizeof(float)*niter);
 	renerg = (float *) malloc(sizeof(float)*niter);
 	//pretermalizacion
-	for ( int k = 0; k<npre; k++ ){
+	for ( int k = 0; k<npre*n*n; k++ ){
 		metropolis(lattice, n, T, B);
 	}
 	float magnet = 0, magnetsq = 0, energ = 0, energsq = 0;
