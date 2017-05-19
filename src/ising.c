@@ -7,7 +7,7 @@
 #include "metropolis.h"
 #include "lattice.h"
 
-#define PROMEDIO_CORR 1000
+#define PROMEDIO_CORR 100
 
 int main(int argc, char **argv) {
 	int c;
@@ -136,6 +136,10 @@ int main(int argc, char **argv) {
 				}
 				rmagnet[k] += sumam/(sumamd*PROMEDIO_CORR);
 				renerg[k] += sumae/(sumaed*PROMEDIO_CORR);	
+			}
+			fill_lattice(lattice, n, prob);
+			for ( int k = 0; k<npre*n*n; k++ ){
+				metropolis(lattice, n, T, B);
 			}
 		}
 	//	print_lattice(lattice, n);
