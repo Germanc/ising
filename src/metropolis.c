@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int metropolis(int *lattice, int n, float T, float B) {
+int metropolis(int *lattice, int n, float T, float B, float J2) {
     int sitio;
     sitio = pick_site(lattice, n);
     int delta_e;
-    delta_e = flip(lattice, n, T, sitio, B);
+    delta_e = flip(lattice, n, T, sitio, B, J2);
   return delta_e;
 }
 
@@ -15,7 +15,7 @@ int pick_site(int *lattice, int n) {
     return (int)round(((double)rand())/RAND_MAX * (n * n - 1));
 }
 
-int flip(int *lattice, int n, float T, int sitio, float B) {
+int flip(int *lattice, int n, float T, int sitio, float B, float J2) {
     int S, E, O, N;
     float J = 1.0;;
     E = (sitio%(n-1) == 0) ? sitio-n+1 : sitio+1;

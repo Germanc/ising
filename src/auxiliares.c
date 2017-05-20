@@ -1,4 +1,4 @@
-float energia(int *lattice, int n, float T, float B){
+float energia(int *lattice, int n, float T, float B, float J2){
     int i;
     float energ =0;
     int S, E;

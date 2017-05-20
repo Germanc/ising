@@ -18,9 +18,10 @@ int main(int argc, char **argv) {
 	float prob = 0.5;
 	int npre = n*n*5000;
 	int corr = 0;
+	float J2 = 0;
 
 	//parametros, nunca mas muchos ejecutables cuando puedo tener parametros
-    while ((c = getopt (argc, argv, "n:T:i:B:p:r:ch")) != -1)
+    while ((c = getopt (argc, argv, "j:n:T:i:B:p:r:ch")) != -1)
 		switch (c)
 		  {
 			case 'n':
@@ -43,6 +44,9 @@ int main(int argc, char **argv) {
 				break;
 			case 'c':
 				corr = 1;
+				break;
+			case 'j':
+				J2 = atof(optarg);
 				break;
 
 
@@ -73,7 +77,7 @@ int main(int argc, char **argv) {
 	renerg = (float *) malloc(sizeof(float)*niter);
 	//pretermalizacion
 	for ( int k = 0; k<npre*n*n; k++ ){
-		metropolis(lattice, n, T, B);
+		metropolis(lattice, n, T, B, J2);
 	}
 	float magnet = 0, magnetsq = 0, energ = 0, energsq = 0;
 	float magnetizacion_ahora, energia_ahora;
@@ -82,13 +86,13 @@ int main(int argc, char **argv) {
 		for (int i = 0; i < niter; i++) {
 			//j> tiempo de correlacion
 			for (int j = 0; j < n*n; j++){
-				metropolis(lattice, n, T, B)/(n*n);
+				metropolis(lattice, n, T, B, J2)/(n*n);
 			}
 			//calcular la magnetizacion y la energia en cada paso es lo suficientemente 
 			//rapido como para que no valga la pena pasarme las delta. si en algun momento 
 			//veo que me limita lo cambio y fue
 			magnetizacion_ahora = magnetizacion(lattice, n)/(n*n);
-			energia_ahora = energia(lattice, n, T, B)/(n*n);
+			energia_ahora = energia(lattice, n, T, B, J2)/(n*n);
 
 			magnet = magnet + magnetizacion_ahora/niter;
 			magnetsq = magnetsq + magnetizacion_ahora*magnetizacion_ahora/niter;
@@ -111,9 +115,9 @@ int main(int argc, char **argv) {
 			magnet = 0;
 			energ = 0;
 			for (int h = 0; h < niter; h++) {
-				metropolis(lattice, n, T, B)/(n*n);
+				metropolis(lattice, n, T, B, J2)/(n*n);
 				magnetizacion_ahora = magnetizacion(lattice, n)/(n*n);
-				energia_ahora = energia(lattice, n, T, B)/(n*n);
+				energia_ahora = energia(lattice, n, T, B, J2)/(n*n);
 
 				magnet = magnet + magnetizacion_ahora/niter;
 				energ = energ + energia_ahora/niter;
@@ -139,7 +143,7 @@ int main(int argc, char **argv) {
 			}
 			fill_lattice(lattice, n, prob);
 			for ( int k = 0; k<npre*n*n; k++ ){
-				metropolis(lattice, n, T, B);
+				metropolis(lattice, n, T, B, J2);
 			}
 		}
 	//	print_lattice(lattice, n);
