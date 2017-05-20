@@ -23,13 +23,13 @@ int flip(int *lattice, int n, float T, int sitio, float B, float J2) {
     S = (sitio>=n*(n-1)-1) ? sitio-(n*(n-1))+1 : sitio+n;
     O = (sitio%(n)== 0) ? sitio+n-1 : sitio-1;
     N = (sitio<(n)) ? sitio+(n*(n-1)) : sitio-n;
-    SW = (S%n) ? S+n-1: S-1;
+    SW = (S%n == 0) ? S+n-1: S-1;
     if(SW<0) SW += n;
-    SE = (S%(n-1)) ? S-n+1: S+1; 
+    SE = (S%(n-1) == 0) ? S-n+1: S+1; 
     if(SE < 0) SE += n;
-    NW = (N%n) ? N+n-1: N-1;
+    NW = (N%n == 0) ? N+n-1: N-1;
     if(NW<0) NW+=n;
-    NE = (N%(n-1)) ? N-n+1: N+1; 
+    NE = (N%(n-1) == 0)  ? N-n+1: N+1; 
     if(NE<0) NE+=n;
 //    printf("SE %i SW %i NW %i NE %i S %i N %i\n", SE, SW, NW, NW, S, N);
 

@@ -9,12 +9,13 @@ float energia(int *lattice, int n, float T, float B, float J2){
         E = (i%(n-1) == 0) ? i-n+1 : i+1;
         if(E<0) E = 1;
         S = (i>=n*(n-1)-1) ? i-(n*(n-1))+1 : i+n;
-        SW = (S%n) ? S+n-1: S-1;
-        SE = (S%(n-1)) ? S-n+1: S+1; 
+        SW = (S%n == 0) ? S+n-1: S-1;
+        SE = (S%(n-1) == 0) ? S-n+1: S+1; 
         if(SW<0) SW += n;
         if(SE < 0) SE += n;
 
         energ += -J*lattice[i]*(lattice[E]+lattice[S])-B*lattice[i]-J2*lattice[i]*(lattice[SE]+lattice[SW]);
+//        printf("SE %i SW %i energ %f S %i\n", SE, SW, energ, S);
     }
     return energ;
 }
