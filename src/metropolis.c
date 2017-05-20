@@ -6,9 +6,9 @@
 int metropolis(int *lattice, int n, float T, float B, float J2) {
     int sitio;
     sitio = pick_site(lattice, n);
-    int delta_e;
-    delta_e = flip(lattice, n, T, sitio, B, J2);
-  return delta_e;
+    int aceptacion;
+    aceptacion = flip(lattice, n, T, sitio, B, J2);
+  return aceptacion;
 }
 
 int pick_site(int *lattice, int n) {
@@ -45,9 +45,9 @@ int flip(int *lattice, int n, float T, int sitio, float B, float J2) {
 
     float pi = exp(-(1.0/T)*delta_e);
     if (pi>1) { 
-        return 0;
+        return 1;
     }else{
-        if (aleatorio > pi) lattice[sitio] *= -1;
+        if (aleatorio > pi) {lattice[sitio] *= -1;}else{return 1;};
     }
   return 0;
 

@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 	int niter = 2000;
     float B = 0;
 	float prob = 0.5;
-	int npre = n*n*5000;
+	int npre = 5000;
 	int corr = 0;
 	float J2 = 0;
 
@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
 		for (int i = 0; i < niter; i++) {
 			//j> tiempo de correlacion
 			for (int j = 0; j < n*n; j++){
-				metropolis(lattice, n, T, B, J2)/(n*n);
+				metropolis(lattice, n, T, B, J2);
 			}
 			//calcular la magnetizacion y la energia en cada paso es lo suficientemente 
 			//rapido como para que no valga la pena pasarme las delta. si en algun momento 
@@ -106,6 +106,7 @@ int main(int argc, char **argv) {
 	//si paso -c calculo la correlacion
 	}else{
 		int cola = n*n;
+		float aceptacion = 0;
 		for(int i;i<niter-cola;i++) {
 			rmagnet[i] = 0;
 			renerg[i] = 0;
@@ -115,7 +116,7 @@ int main(int argc, char **argv) {
 			magnet = 0;
 			energ = 0;
 			for (int h = 0; h < niter; h++) {
-				metropolis(lattice, n, T, B, J2)/(n*n);
+				aceptacion +=metropolis(lattice, n, T, B, J2);
 				magnetizacion_ahora = magnetizacion(lattice, n)/(n*n);
 				energia_ahora = energia(lattice, n, T, B, J2)/(n*n);
 
@@ -157,6 +158,7 @@ int main(int argc, char **argv) {
 		}
 
 		fclose(correlacion);
+		printf("Aceptacion %f\n", aceptacion/(niter*PROMEDIO_CORR));
 	}
 	free(magneti);
 	free(energi);
