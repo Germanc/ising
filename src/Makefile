@@ -6,7 +6,7 @@ LD = $(CC)
 SOURCE_C = $(wildcard *.c)
 OBJECTS_C = $(patsubst %.c, ../bin/%_c.o, $(SOURCE_C))
 
-CFLAGS = -std=gnu99
+CFLAGS = -std=gnu99 -fopenmp -O3
 EXECUTABLE = ../bin/ising.e
 
 default: help
@@ -30,7 +30,7 @@ all: objects executable
 	$(CC) $(CFLAGS) -c $^ -o $@ -g
 
 %.e: $(OBJECTS_C)
-	$(LD) $^ -o ../bin/$@ -lm -g
+	$(LD) $(CFLAGS) $^ -o ../bin/$@ -lm -g
 
 clean:
 	rm -rfv $(OBJECTS_C) $(EXECUTABLE)
