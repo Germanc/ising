@@ -82,6 +82,7 @@ int main(int argc, char **argv) {
 	float magnet = 0, magnetsq = 0, energ = 0, energsq = 0;
 	float magnetizacion_ahora, energia_ahora;
 	//inicializo variables
+    float magnet_varianza = 0, energia_varianza = 0;
 	if(corr==0){
 		for (int i = 0; i < niter; i++) {
 			//j> tiempo de correlacion
@@ -95,14 +96,18 @@ int main(int argc, char **argv) {
 			energia_ahora = energia(lattice, n, T, B, J2)/(n*n);
 
 			magnet = magnet + magnetizacion_ahora/niter;
-			magnetsq = magnetsq + magnetizacion_ahora*magnetizacion_ahora/niter;
 
 			energ = energ + energia_ahora/niter;
-			energsq = energsq + energia_ahora*energia_ahora/niter;
+            energi[i] = energia_ahora;
+            magneti[i] = magnetizacion_ahora;
+
 		}
-		float magnet_varianza = sqrt(magnetsq - magnet*magnet);
-		float energia_varianza = sqrt(energsq - energ*energ);
-		printf("%f %f %.15f %.15f %.15f %.15f\n", T, B, energ, energia_varianza, magnet, magnet_varianza);
+        for (int i=0; i<niter;i++){
+            magnet_varianza += (magneti[i]-magnet)*(magneti[i]-magnet)/niter;
+            energia_varianza += (energi[i]-energ)*(energi[i]-energ)/niter;
+        }
+
+		printf("%f %f %.15f %.15f %.15f %.15f\n", T, B, energ, sqrt(energia_varianza), magnet, sqrt(magnet_varianza));
 	//si paso -c calculo la correlacion
 	}else{
 		int cola = n*n;
