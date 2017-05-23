@@ -76,30 +76,31 @@ int main(int argc, char **argv) {
 	rmagnet = (float *)malloc(sizeof(float)*niter);
 	renerg = (float *) malloc(sizeof(float)*niter);
 	//pretermalizacion
+	float magnetizacion_ahora, energia_ahora;
+    energia_ahora = energia(lattice, n, T, B, J2);
+    magnetizacion_ahora = magnetizacion(lattice, n);
+
 	for ( int k = 0; k<npre*n*n; k++ ){
-		metropolis(lattice, n, T, B, J2);
+		metropolis(lattice, n, T, B, J2, &energia_ahora, &magnetizacion_ahora);
+//        printf("%f %f\n", energia(lattice, n,T , B, J2), energia_ahora);
+//        printf("%f %f\n", magnetizacion(lattice, n), magnetizacion_ahora);
 	}
 	float magnet = 0, magnetsq = 0, energ = 0, energsq = 0;
-	float magnetizacion_ahora, energia_ahora;
 	//inicializo variables
     float magnet_varianza = 0, energia_varianza = 0;
 	if(corr==0){
 		for (int i = 0; i < niter; i++) {
 			//j> tiempo de correlacion
 			for (int j = 0; j < n*n; j++){
-				metropolis(lattice, n, T, B, J2);
+				metropolis(lattice, n, T, B, J2, &energia_ahora, &magnetizacion_ahora);
 			}
 			//calcular la magnetizacion y la energia en cada paso es lo suficientemente 
 			//rapido como para que no valga la pena pasarme las delta. si en algun momento 
 			//veo que me limita lo cambio y fue
-			magnetizacion_ahora = magnetizacion(lattice, n)/(n*n);
-			energia_ahora = energia(lattice, n, T, B, J2)/(n*n);
-
-			magnet = magnet + magnetizacion_ahora/niter;
-
-			energ = energ + energia_ahora/niter;
-            energi[i] = energia_ahora;
-            magneti[i] = magnetizacion_ahora;
+			magnet = magnet + magnetizacion_ahora/(niter*n*n);
+			energ = energ + energia_ahora/(niter*n*n);
+            energi[i] = energia_ahora/(n*n);
+            magneti[i] = magnetizacion_ahora/(n*n);
 
 		}
         for (int i=0; i<niter;i++){
@@ -121,15 +122,13 @@ int main(int argc, char **argv) {
 			magnet = 0;
 			energ = 0;
 			for (int h = 0; h < niter; h++) {
-				aceptacion +=metropolis(lattice, n, T, B, J2);
-				magnetizacion_ahora = magnetizacion(lattice, n)/(n*n);
-				energia_ahora = energia(lattice, n, T, B, J2)/(n*n);
+				aceptacion +=metropolis(lattice, n, T, B, J2, &energia_ahora, &magnetizacion_ahora);
 
-				magnet = magnet + magnetizacion_ahora/niter;
-				energ = energ + energia_ahora/niter;
+				magnet = magnet + magnetizacion_ahora/(niter*n*n);
+				energ = energ + energia_ahora/(niter*n*n);
 				
-				energi[h] = energia_ahora;
-				magneti[h] = magnetizacion_ahora;
+				energi[h] = energia_ahora/(n*n);
+				magneti[h] = magnetizacion_ahora/(n*n);
 			}
 
 			float sumamd=0, sumaed=0;
@@ -148,8 +147,11 @@ int main(int argc, char **argv) {
 				renerg[k] += sumae/(sumaed*PROMEDIO_CORR);	
 			}
 			fill_lattice(lattice, n, prob);
+            energia_ahora = energia(lattice, n, T, B, J2);
+            magnetizacion_ahora = magnetizacion(lattice, n);
+
 			for ( int k = 0; k<npre*n*n; k++ ){
-				metropolis(lattice, n, T, B, J2);
+				metropolis(lattice, n, T, B, J2, &energia_ahora, &magnetizacion_ahora);
 			}
 		}
 	//	print_lattice(lattice, n);
