@@ -44,7 +44,7 @@ int flip(int *lattice, int n, float T, int sitio, float B, float J2, float *ener
 
     float pi = exp(-(1.0/T)*delta_e);
     if (pi>1) { 
-        *magnet -= 2*lattice[sitio];
+        *magnet += 2*lattice[sitio];
         *energ += delta_e;
 //        printf("delta e %i\n", delta_e);
 //        printf("E %i S %i N %i O %i sitio %i\n", E, S, N, O, sitio);
@@ -54,7 +54,7 @@ int flip(int *lattice, int n, float T, int sitio, float B, float J2, float *ener
             lattice[sitio] *= -1;
             return 0;
         }else{
-            *magnet -= 2*lattice[sitio];
+            *magnet += 2*lattice[sitio];
             *energ += delta_e;
 //        printf("E %i S %i N %i O %i sitio %i\n", E, S, N, O, sitio);
 //            printf("delta e %i\n", delta_e);

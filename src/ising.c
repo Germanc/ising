@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
 //        printf("%f %f\n", energia(lattice, n,T , B, J2), energia_ahora);
 //        printf("%f %f\n", magnetizacion(lattice, n), magnetizacion_ahora);
 	}
-	float magnet = 0, magnetsq = 0, energ = 0, energsq = 0;
+	float magnet = 0, energ = 0;
 	//inicializo variables
     float magnet_varianza = 0, energia_varianza = 0;
 	if(corr==0){
@@ -97,6 +97,7 @@ int main(int argc, char **argv) {
 			//calcular la magnetizacion y la energia en cada paso es lo suficientemente 
 			//rapido como para que no valga la pena pasarme las delta. si en algun momento 
 			//veo que me limita lo cambio y fue
+//            magnetizacion_ahora = magnetizacion(lattice,n);
 			magnet = magnet + magnetizacion_ahora/(niter*n*n);
 			energ = energ + energia_ahora/(niter*n*n);
             energi[i] = energia_ahora/(n*n);

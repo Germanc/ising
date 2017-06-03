@@ -1,8 +1,9 @@
 #b) en funcion de T
-#for t in $(seq 1.6 0.01 10)
-#do
-#    ../bin/ising.e -t $t -n 32 >> datos.dat
-#done
+for t in $(seq 0.01 0.01 6)
+do
+    echo $t
+    ../bin/ising.e -T $t -n 32  >> datos_b_0_4.dat
+done
 
 #b) correlaciones
 #for T in $(seq 1.6 0.05 2.1)
@@ -43,3 +44,21 @@
 #        ../bin/ising.e -T $t -n $n >> datos_$n.dat
 #    done
 #done
+
+
+#d) cambiar j=0.0 por j=-1.0
+#for t in $(seq 1.6 0.01 10)
+#do
+#    echo  "$t"
+#    ../bin/ising.e -T $t -n 32 -B 1   >> datos_d.dat
+#done
+
+
+##e)
+#for t in $(seq 1.6 0.01 10)
+#do
+#    echo  $t
+#    ../bin/ising.e -T $t -n 32 -j -1   >> datos_e.dat
+#done
+
+
